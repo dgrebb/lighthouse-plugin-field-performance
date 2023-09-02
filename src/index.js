@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   audits: [
     { path: 'lighthouse-plugin-field-performance/src/audits/field-fcp.js' },
     { path: 'lighthouse-plugin-field-performance/src/audits/field-lcp.js' },
