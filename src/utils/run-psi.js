@@ -1,15 +1,11 @@
-const { default: fetch } = require('node-fetch')
-const { stringify } = require('querystring')
+import fetch from 'node-fetch'
+import { stringify } from 'querystring'
 
 // config
 
 const runPagespeedUrl = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed'
 const retryDelay = 3000
 const maxRetries = 3
-
-// expose
-
-module.exports = { runPsi }
 
 /**
  * Run PSI API.
@@ -23,7 +19,7 @@ module.exports = { runPsi }
  * @return {Promise<any>}
  */
 
-async function runPsi(opts, retryCounter = 0) {
+export default async function runPsi(opts, retryCounter = 0) {
   const { url, category, strategy, psiToken } = opts
   const params = { url, strategy, ...(category ? { category } : {}), ...(psiToken ? { key: psiToken } : {}) }
   const strParams = stringify(params)

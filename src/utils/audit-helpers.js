@@ -1,6 +1,6 @@
-const { round } = require('lodash')
-const { Audit } = require('lighthouse')
-const { runPsi } = require('./run-psi')
+import { round } from 'lodash'
+import { Audit } from 'lighthouse'
+import runPsi from './run-psi'
 
 /**
  * @typedef {{ good: number, poor: number }} Range
@@ -23,7 +23,7 @@ const requests = new Map()
  * @return {Promise<LoadingExperience>}
  */
 
-exports.getLoadingExperience = async (artifacts, context, isUrl = true) => {
+export const getLoadingExperience = async (artifacts, context, isUrl = true) => {
   const psiToken = context.settings.psiToken || null
   const strategy = artifacts.settings.formFactor === 'desktop' ? 'desktop' : 'mobile'
   const prefix = isUrl ? 'url' : 'origin'
@@ -51,7 +51,7 @@ exports.getLoadingExperience = async (artifacts, context, isUrl = true) => {
  * @return {Object}
  */
 
-exports.createValueResult = (metricValue, metric) => {
+export const createValueResult = (metricValue, metric) => {
   const numericValue = normalizeMetricValue(metric, metricValue.percentile)
   return {
     numericValue,
@@ -68,7 +68,7 @@ exports.createValueResult = (metricValue, metric) => {
  * @param {string} title
  */
 
-exports.createNotApplicableResult = (title) => {
+export const createNotApplicableResult = (title) => {
   return {
     score: null,
     notApplicable: true,
@@ -83,7 +83,7 @@ exports.createNotApplicableResult = (title) => {
  * @param {Error} err
  */
 
-exports.createErrorResult = (err) => {
+export const createErrorResult = (err) => {
   console.log(err)
   return {
     score: null,
@@ -97,7 +97,7 @@ exports.createErrorResult = (err) => {
  * @param {LoadingExperience} le
  */
 
-exports.isResultsInField = (le) => {
+export const isResultsInField = (le) => {
   return !!le && Boolean(Object.values(le.metrics || {}).length)
 }
 

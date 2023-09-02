@@ -1,10 +1,12 @@
-const { serial } = require('ava')
-const { omit, isNumber, isString } = require('lodash')
-const chromeLauncher = require('chrome-launcher')
-const lighthouse = require('lighthouse')
+import test from 'ava'
+import omit from 'lodash/omit.js'
+import isString from 'lodash/isString.js'
+import isNumber from 'lodash/isNumber.js'
+import * as ChromeLauncher from 'chrome-launcher'
+import lighthouse from 'lighthouse'
 const psiToken = process.env.PSI_TOKEN || ''
 
-serial.only('Measure field perf for site in CruX', async (t) => {
+test.serial.only('Measure field perf for site in CruX', async (t) => {
   const { audits, categories } = await runLighthouse('https://example.com/')
   const category = categories['lighthouse-plugin-field-performance']
   checkResponse('field-fcp')
@@ -37,7 +39,7 @@ serial.only('Measure field perf for site in CruX', async (t) => {
   }
 })
 
-serial('Measure field perf for site site not in CruX', async (t) => {
+test.serial('Measure field perf for site site not in CruX', async (t) => {
   const { audits, categories } = await runLighthouse('https://alekseykulikov.com/')
   t.snapshot(audits['field-fcp'])
   t.snapshot(audits['field-lcp'])
@@ -52,7 +54,7 @@ serial('Measure field perf for site site not in CruX', async (t) => {
 
 /** @param {string} url */
 async function runLighthouse(url) {
-  const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless', '--enable-logging', '--no-sandbox'] })
+  const chrome = await ChromeLauncher.launch({ chromeFlags: ['--headless', '--enable-logging', '--no-sandbox'] })
   const flags = {
     port: chrome.port,
     onlyCategories: ['lighthouse-plugin-field-performance'],

@@ -1,13 +1,13 @@
-const { Audit } = require('lighthouse')
-const {
+import Audit from 'lighthouse'
+import {
   getLoadingExperience,
   createNotApplicableResult,
   createValueResult,
   createErrorResult,
   isResultsInField,
-} = require('../utils/audit-helpers')
+} from '../utils/audit-helpers'
 
-module.exports = class FieldLcpOriginAudit extends Audit {
+class FieldLcpOriginAudit extends Audit {
   static get meta() {
     return {
       id: 'field-lcp-origin',
@@ -29,3 +29,5 @@ module.exports = class FieldLcpOriginAudit extends Audit {
     }
   }
 }
+
+export default FieldLcpOriginAudit
